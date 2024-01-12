@@ -1,5 +1,4 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 import Home from "./src/Home";
 import AddNote from "./src/AddNote";
@@ -19,23 +18,19 @@ export default function App() {
             headerRight: () => (
               <Button
                 onPress={() => navigation.navigate("AddNote")}
-                title="Add Note"
+                title="New Note"
                 color="#000"
               />
             ),
+            title: "Notes",
           })}
         />
-        <Stack.Screen name="AddNote" component={AddNote} />
+        <Stack.Screen
+          name="AddNote"
+          component={AddNote}
+          options={{ title: "New Note" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

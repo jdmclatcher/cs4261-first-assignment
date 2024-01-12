@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { firebase } from "../config";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const AddNote = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // prevent spam clicking save note
 
+  // Save the note here, then navigate back to the home screen
   const handleSave = async () => {
-    // Save the note here, then navigate back to the home screen
+    setIsLoading(true);
     // Create a new note
-    const note = { title, description };
+    const note = { title, description, createdAt: serverTimestamp() };
 
     // Get a reference to the Firestore collection
     const notesCollection = collection(firebase, "notes");
@@ -23,21 +25,32 @@ const AddNote = ({ navigation }) => {
       navigation.goBack();
     } catch (error) {
       console.error("Error adding note: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Title</Text>
-      <TextInput style={styles.input} value={title} onChangeText={setTitle} />
+      <TextInput
+        style={styles.titleInput}
+        value={title}
+        onChangeText={setTitle}
+      />
       <Text style={styles.label}>Description</Text>
       <TextInput
-        style={styles.input}
+        style={styles.descriptionInput}
         value={description}
         onChangeText={setDescription}
         multiline
       />
-      <Button title="Save Note" onPress={handleSave} />
+      <Button
+        title="Save Note"
+        onPress={handleSave}
+        // Disable the button if the title is empty or if we're saving the note
+        disabled={title === "" || isLoading}
+      />
     </View>
   );
 };
@@ -52,9 +65,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
   },
-  input: {
+  titleInput: {
     borderWidth: 1,
     borderColor: "#ddd",
+    height: 25,
+  },
+  descriptionInput: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    height: 150,
   },
 });
 
