@@ -1,14 +1,14 @@
-import "react-native-gesture-handler";
-import { Alert, View, Button } from "react-native";
-import Home from "./src/Home";
-import AddNote from "./src/AddNote";
-import Login from "./src/Login";
-import CreateAccount from "./src/CreateAccount";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "./config";
+import 'react-native-gesture-handler';
+import { Alert, View, Button } from 'react-native';
+import Home from './src/Home';
+import AddNote from './src/AddNote';
+import Login from './src/Login';
+import CreateAccount from './src/CreateAccount';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from './config';
 
 const Stack = createStackNavigator();
 
@@ -34,45 +34,45 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? "Home" : "Login"}>
+      <Stack.Navigator initialRouteName={user ? 'Home' : 'Login'}>
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{ title: "Login" }}
+          options={{ title: 'Login' }}
         />
         <Stack.Screen
           name="CreateAccount"
           component={CreateAccount}
-          options={{ title: "Create Account" }}
+          options={{ title: 'Create Account' }}
         />
         <Stack.Screen
           name="Home"
           component={Home}
           options={({ navigation }) => ({
             headerLeft: () => (
-              <View style={{ flexDirection: "row", marginLeft: 10 }}>
+              <View style={{ flexDirection: 'row', marginLeft: 10 }}>
                 <Button
                   onPress={() => {
                     Alert.alert(
-                      "Log Out",
-                      "Are you sure you want to log out?",
+                      'Log Out',
+                      'Are you sure you want to log out?',
                       [
                         {
-                          text: "Cancel",
-                          style: "cancel",
+                          text: 'Cancel',
+                          style: 'cancel',
                         },
                         {
-                          text: "OK",
+                          text: 'OK',
                           onPress: () => {
                             signOut(auth).then(() => {
                               navigation.reset({
                                 index: 0,
-                                routes: [{ name: "Login" }],
+                                routes: [{ name: 'Login' }],
                               });
                             });
                           },
                         },
-                      ]
+                      ],
                     );
                   }}
                   title="Log Out"
@@ -82,18 +82,18 @@ export default function App() {
             ),
             headerRight: () => (
               <Button
-                onPress={() => navigation.navigate("AddNote")}
+                onPress={() => navigation.navigate('AddNote')}
                 title="New Note"
                 color="#000"
               />
             ),
-            title: "Notes",
+            title: 'Notes',
           })}
         />
         <Stack.Screen
           name="AddNote"
           component={AddNote}
-          options={{ title: "New Note" }}
+          options={{ title: 'New Note' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
