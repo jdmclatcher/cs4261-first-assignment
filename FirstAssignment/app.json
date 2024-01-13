@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jdmclatcher.firstapplication"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +32,12 @@
         "projectId": "d47219c4-4086-4130-bab7-9d68dbbe6e88"
       }
     },
-    "owner": "jdmclatcher"
+    "owner": "jdmclatcher",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d47219c4-4086-4130-bab7-9d68dbbe6e88"
+    }
   }
 }
