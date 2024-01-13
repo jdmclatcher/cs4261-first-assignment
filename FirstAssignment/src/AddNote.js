@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { firebase, auth } from "../config";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { firebase, auth } from '../config';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const AddNote = ({ navigation }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false); // prevent spam clicking save note
 
   // Save the note here, then navigate back to the home screen
@@ -20,7 +20,7 @@ const AddNote = ({ navigation }) => {
     };
 
     // Get a reference to the Firestore collection
-    const notesCollection = collection(firebase, "notes");
+    const notesCollection = collection(firebase, 'notes');
 
     // Add the new note
     try {
@@ -28,7 +28,7 @@ const AddNote = ({ navigation }) => {
       // Navigate back to the home screen
       navigation.goBack();
     } catch (error) {
-      console.error("Error adding note: ", error);
+      console.error('Error adding note: ', error);
     } finally {
       setIsLoading(false);
     }
@@ -53,7 +53,7 @@ const AddNote = ({ navigation }) => {
         title="Save Note"
         onPress={handleSave}
         // Disable the button if the title is empty or if we're saving the note
-        disabled={title === "" || isLoading}
+        disabled={title === '' || isLoading}
       />
     </View>
   );
@@ -66,17 +66,17 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 20,
   },
   titleInput: {
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: '#ddd',
     height: 25,
   },
   descriptionInput: {
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: '#ddd',
     height: 150,
   },
 });

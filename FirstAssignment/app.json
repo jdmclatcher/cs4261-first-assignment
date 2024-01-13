@@ -1,42 +1,4 @@
 {
-  "expo": {
-    "name": "FirstAssignment",
-    "slug": "first-application",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.jdmclatcher.firstapplication"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png",
-      "bundler": "metro"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "d47219c4-4086-4130-bab7-9d68dbbe6e88"
-      }
-    },
-    "owner": "jdmclatcher",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/d47219c4-4086-4130-bab7-9d68dbbe6e88"
-    }
-  }
+  "name": "FirstAssignment",
+  "displayName": "FirstAssignment"
 }
