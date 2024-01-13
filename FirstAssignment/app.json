@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "FirstAssignment",
-    "slug": "FirstAssignment",
+    "slug": "first-application",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d47219c4-4086-4130-bab7-9d68dbbe6e88"
+      }
+    },
+    "owner": "jdmclatcher"
   }
 }
