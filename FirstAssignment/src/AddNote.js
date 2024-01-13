@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { firebase } from "../config";
+import { firebase, auth } from "../config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 const AddNote = ({ navigation }) => {
@@ -12,7 +12,12 @@ const AddNote = ({ navigation }) => {
   const handleSave = async () => {
     setIsLoading(true);
     // Create a new note
-    const note = { title, description, createdAt: serverTimestamp() };
+    const note = {
+      title,
+      description,
+      createdAt: serverTimestamp(),
+      userId: auth.currentUser.uid,
+    };
 
     // Get a reference to the Firestore collection
     const notesCollection = collection(firebase, "notes");
@@ -20,7 +25,6 @@ const AddNote = ({ navigation }) => {
     // Add the new note
     try {
       await addDoc(notesCollection, note);
-      console.log("Note added!");
       // Navigate back to the home screen
       navigation.goBack();
     } catch (error) {

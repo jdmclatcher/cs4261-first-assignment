@@ -9,8 +9,9 @@ import {
   collection,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
-import { firebase } from "../config";
+import { firebase, auth } from "../config";
 
 const Home = () => {
   const [notes, setNotes] = useState([]);
@@ -19,6 +20,7 @@ const Home = () => {
     // sort notes by the time they were created
     const notesQuery = query(
       collection(firebase, "notes"),
+      where("userId", "==", auth.currentUser.uid), // only get notes for the current user
       orderBy("createdAt", "desc")
     );
     // map notes
