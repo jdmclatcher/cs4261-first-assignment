@@ -36,6 +36,7 @@ export default function Login() {
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
+        placeholderTextColor="#808080"
         keyboardType="email-address"
         autoCapitalize="none"
       />
@@ -44,6 +45,7 @@ export default function Login() {
         value={password}
         onChangeText={setPassword}
         placeholder="Password"
+        placeholderTextColor="#808080"
         secureTextEntry
         autoCapitalize="none"
       />

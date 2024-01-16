@@ -6,6 +6,8 @@ import {
   ScrollView,
 } from 'react-native-gesture-handler';
 import { Card } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 import {
   doc,
   deleteDoc,
@@ -21,24 +23,39 @@ const Home = () => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    // sort notes by the time they were created
-    const notesQuery = query(
-      collection(firebase, 'notes'),
-      where('userId', '==', auth.currentUser.uid), // only get notes for the current user
-      orderBy('createdAt', 'desc'),
-    );
-    // map notes
-    const unsubscribe = onSnapshot(notesQuery, snapshot => {
-      const newNotes = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    const loadNotes = async () => {
+      // Check if the user is online
+      const netInfo = await NetInfo.fetch();
+      if (!netInfo.isConnected) {
+        // If the user is offline, load the notes from AsyncStorage
+        const storedNotes = await AsyncStorage.getItem('notes');
+        setNotes(storedNotes ? JSON.parse(storedNotes) : []);
+        return;
+      }
 
-      setNotes(newNotes);
-    });
+      // If the user is online, fetch the notes from Firestore
+      const notesQuery = query(
+        collection(firebase, 'notes'),
+        where('userId', '==', auth.currentUser.uid),
+        orderBy('createdAt', 'desc'),
+      );
 
-    // Unsubscribe from snapshots when component unmounts
-    return () => unsubscribe();
+      const unsubscribe = onSnapshot(notesQuery, snapshot => {
+        const newNotes = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        // Store the notes in AsyncStorage
+        AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+
+        setNotes(newNotes);
+      });
+
+      return () => unsubscribe();
+    };
+
+    loadNotes();
   }, []);
 
   // enable swiping left to ask user if they want to delete the note
@@ -75,35 +92,37 @@ const Home = () => {
 
   return (
     // return notes as cards if there's any, otherwise return a helpful message
-    <ScrollView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       {notes.length > 0 ? (
-        notes.map(note => (
-          <Swipeable
-            key={note.id}
-            friction={4} // make it harder to swipe
-            renderLeftActions={() => renderLeftActions(note)}
-            renderRightActions={() => renderLeftActions(note)}>
-            <Card>
-              <Card.Title>{note.title}</Card.Title>
-              <Card.Divider />
-              <Text style={{ fontSize: 14, margin: 10 }}>
-                {note.description}
-              </Text>
-            </Card>
-          </Swipeable>
-        ))
+        <ScrollView style={{ flex: 1 }}>
+          {notes.map(note => (
+            <Swipeable
+              key={note.id}
+              friction={4} // make it harder to swipe
+              renderLeftActions={() => renderLeftActions(note)}
+              renderRightActions={() => renderLeftActions(note)}>
+              <Card>
+                <Card.Title>{note.title}</Card.Title>
+                <Card.Divider />
+                <Text style={{ fontSize: 14, margin: 10 }}>
+                  {note.description}
+                </Text>
+              </Card>
+            </Swipeable>
+          ))}
+        </ScrollView>
       ) : (
         <View style={{ flex: 1 }}>
           <View
-            style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text style={{ color: 'gray', fontStyle: 'italic' }}>
               Click on "New Note" to create a new note!
             </Text>
           </View>
-          <View style={{ flex: 1 }} />
+          <View style={{ flex: 2 }} />
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 };
 
