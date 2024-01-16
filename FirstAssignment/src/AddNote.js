@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import { firebase, auth } from '../config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -72,12 +79,13 @@ const styles = StyleSheet.create({
   titleInput: {
     borderWidth: 1,
     borderColor: '#ddd',
-    height: 25,
+    height: Platform.OS === 'android' ? 40 : 25,
   },
   descriptionInput: {
     borderWidth: 1,
     borderColor: '#ddd',
     height: 150,
+    textAlignVertical: 'top',
   },
 });
 

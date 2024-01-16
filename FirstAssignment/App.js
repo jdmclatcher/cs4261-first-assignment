@@ -81,11 +81,13 @@ export default function App() {
               </View>
             ),
             headerRight: () => (
-              <Button
-                onPress={() => navigation.navigate('AddNote')}
-                title="New Note"
-                color="#000"
-              />
+              <View style={{ flexDirection: 'row', marginRight: 10 }}>
+                <Button
+                  onPress={() => navigation.navigate('AddNote')}
+                  title="New Note"
+                  color="#000"
+                />
+              </View>
             ),
             title: 'Notes',
           })}
