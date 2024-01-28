@@ -15,6 +15,7 @@ import {
   EXPO_PUBLIC_APP_ID,
   EXPO_PUBLIC_MEASUREMENT_ID,
 } from '@env';
+
 const firebaseConfig = {
   apiKey: EXPO_PUBLIC_API_KEY,
   authDomain: EXPO_PUBLIC_AUTH_DOMAIN,
