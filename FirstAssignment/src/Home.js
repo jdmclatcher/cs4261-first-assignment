@@ -101,8 +101,8 @@ const Home = () => {
               friction={4} // make it harder to swipe
               renderLeftActions={() => renderLeftActions(note)}
               renderRightActions={() => renderLeftActions(note)}>
-              <Card>
-                <Card.Title>{note.title}</Card.Title>
+              <Card containerStyle={{ borderRadius: 10 }}>
+                <Card.Title style={{ fontSize:18, fontWeight: 'bold' }}>{note.title}</Card.Title>
                 <Card.Divider />
                 <Text style={{ fontSize: 14, margin: 10 }}>
                   {note.description}
